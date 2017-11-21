@@ -8,18 +8,24 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace Restaurant
+namespace RestaurantStudio
 {
-    public class Program
+    class Program
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
-        }
+            Console.WriteLine("Blake's tasty menu!");
+            var menu = new Menu();
+            menu.AddMenuItem(new MenuItem("Hot Dogs", .99, "Mystery meat in link form.", "Main Course", false));
+            menu.AddMenuItem(new MenuItem("Mac n Cheese", 1.99, "Macoroni and cheese powder.", "Side", false));
+            menu.AddMenuItem(new MenuItem("Humus and Pita", 3, "Freshly made humus with pita.", "Appetizer", true));
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .Build();
+            foreach (var menuItem in menu.MenuItems)
+            {
+                Console.WriteLine(menuItem);
+            }
+
+            Console.Read();
+        }
     }
 }

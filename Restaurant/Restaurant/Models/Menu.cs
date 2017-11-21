@@ -1,22 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace Restaurant.Models
+namespace RestaurantStudio
 {
     public class Menu
     {
-        public List<MenuItem> MenuItems { get; set; }
+        public List<MenuItem> MenuItems { get; }
+        public DateTime LastUpdated { get; private set; }
 
         public Menu()
         {
-            MenuItems = new List<MenuItem>();
+            this.MenuItems = new List<MenuItem>();
+
+            //return MenuItems.OrderByDescending(bananahead => m.DateAdded).FirstOrDefault().DateAdded;
         }
 
-        public DateTime LastUpdated()
+        public void AddMenuItem(MenuItem menuItem)
         {
-            return MenuItems.OrderByDescending(MenuItems => MenuItems.DateAdded).FirstOrDefault().DateAdded;
+            //TODO: prevent adding the same menu item
+            if (!this.MenuItems.Contains(menuItem))
+            {
+                this.MenuItems.Add(menuItem);
+                // Update LastUpdated anytime we add a new menuItem
+                this.LastUpdated = DateTime.Now;
+            }
+        }
+
+        public void RemoveMenuItem(MenuItem menuItem)
+        {
+            this.MenuItems.Remove(menuItem);
+            // Update LastUpdated anytime we remove a menuItem
+            this.LastUpdated = DateTime.Now;
         }
     }
 }
